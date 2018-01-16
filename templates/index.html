@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Coin Tracker</title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/assets/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <form>
+      <div class="formgroup">
+        <label for="selectCoin"> Select Coin: </label>
+        <select class="form-control" id="selectCoin">
+          <option> Dogecoin </option>
+          <option> Ethereum </option>
+          <option> Bitcoin </option>
+        </select>
+      </div>
+      <div class="formgroup">
+        <label for=inputAmount"> Amount </label>
+        <input type="number" class="form-control" id="inputAmount">
+      </div>
+      <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
+        Add 
+      </button>
+    </form>
+    <div>
+      <h2> Total Value: <span id="total"></span> </h2>
+    </div>
+
+    <div>
+      <table id="tableCoin" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Coin</th>
+            <th>Amount</th>
+            <th>Euro</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="static/index.js"></script>
+</body>
+
+</html>
