@@ -7,28 +7,23 @@
   <meta name="author" content="">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="static/assets/bootstrap.min.css">
 </head>
 
 <body>
-  <div class="container">
-    <form>
-      <div class="formgroup">
-        <label for="selectCoin"> Select Coin: </label>
-        <select class="form-control" id="selectCoin">
-          <option> Dogecoin </option>
-          <option> Ethereum </option>
-          <option> Bitcoin </option>
-        </select>
-      </div>
-      <div class="formgroup">
-        <label for=inputAmount"> Amount </label>
-        <input type="number" class="form-control" id="inputAmount">
-      </div>
-      <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
-        Add 
-      </button>
-    </form>
+  <div>
+    <div class="formgroup">
+      <label for="selectCoin"> Select Coin: </label>
+      <select class="form-control" id="selectCoin">
+      </select>
+    </div>
+    <div class="formgroup">
+      <label for=inputAmount"> Amount </label>
+      <input type="number" step="any" 
+        class="form-control" id="inputAmount">
+    </div>
+    <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
+      Add 
+    </button>
     <div>
       <h2> Total Value: <span id="total"></span> </h2>
     </div>
@@ -39,7 +34,9 @@
           <tr>
             <th>Coin</th>
             <th>Amount</th>
-            <th>Euro</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
