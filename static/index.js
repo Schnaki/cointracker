@@ -23,9 +23,19 @@ const getCoinPrices = (coinIds, callback) => {
   xhttp.send();
 }
 
+const coinExist = (id) => {
+  let coins = JSON.parse(window.localStorage.getItem("coins"));
+  if(coins == null) { return false };
+  let temp = false;
+  coins.forEach(coin => { if(coin.id == id) { temp = true }});
+  return temp
+}
+
 const addCoin = () => {
   const id = document.getElementById("selectCoin").value; 
   const amount = document.getElementById("inputAmount").value;
+
+  if (coinExist(id)) { return };
 
   let coin = {id: id, amount: amount}
   
@@ -41,8 +51,8 @@ const addCoin = () => {
     coin.price = parseFloat(price).toFixed(2);
     coin.total = parseFloat((price * coin.amount))
       .toFixed(2);
-    updateTotal(coin.total);
     addCoinToTable(coin);
+    updateTotal();
   });
 }
 
@@ -54,12 +64,12 @@ const deleteCoin = (e) => {
   let coins = JSON.parse(window.localStorage.getItem("coins"));
   coins.forEach(c => {
     if (c.id == id) {
-      updateTotal(total * -1);
       coins.splice(coins.indexOf(c), 1)
     }
   });
   window.localStorage.setItem("coins", JSON.stringify(coins));
   tbody.removeChild(tr);
+  updateTotal();
 }
 
 const getCoins = (callback) => {
@@ -132,26 +142,29 @@ const addCoinToTable = (coin) => {
   document.getElementById("tableCoin")
     .getElementsByTagName("tbody")[0]
     .append(tr);
-  return coin.total;
 }
 
 const fillTable = () => {
-  let total = 0;
   getCoins(coins => {
     coins.forEach(coin => {
-      total += parseFloat(addCoinToTable(coin));
+      addCoinToTable(coin)
     });
-    updateTotal(total);
   }); 
 }
 
-const updateTotal = (val) => {
+//avoid using extra server calls
+const updateTotal = () => {
   let span = document.getElementById("total");
   if(!span.innerHTML) {
     span.innerHTML = 0;
   }
-  span.innerHTML = parseFloat(span.innerHTML) + parseFloat(val);
+  getCoins(coins => { 
+    let total = 0;
+    coins.forEach(coin => total += parseFloat(coin.total));
+    span.innerHTML = total.toFixed(2);
+  });
 }
 
 fillSelect();
 fillTable();
+updateTotal();
