@@ -16,7 +16,7 @@ def index():
 @app.route("/coin")
 def get_coin_price():
     coin = request.args.get("coin")
-    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content
+    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content.decode("utf-8");
     return get_coin_price_helper(coin)
 
 @app.route("/coins")
@@ -33,7 +33,7 @@ def get_coin_ids():
     return f.read()
 
 def get_coin_price_helper(coin):
-    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content
+    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content.decode("utf-8");
     return json.loads(content)[0]["price_eur"]
 
 def save_available_coin_ids():
