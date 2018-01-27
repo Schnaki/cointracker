@@ -37,7 +37,7 @@ def get_coin_price_helper(coin):
     return json.loads(content)[0]["price_eur"]
 
 def save_available_coin_ids():
-    content = requests.get(API_ENDPOINT).content
+    content = requests.get(API_ENDPOINT).content.decode("utf-8");
     parsed = json.loads(content)
     coin_ids = []
     for coin in parsed:
