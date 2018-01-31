@@ -7,28 +7,25 @@
   <meta name="author" content="">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/index.css">
 </head>
 
 <body>
-  <div>
-    <div class="formgroup">
+  <div id="content">
+    <div id="divAdd">
       <label for="selectCoin"> Select Coin: </label>
-      <select class="form-control" id="selectCoin">
-      </select>
-    </div>
-    <div class="formgroup">
+      <select class="form-control" id="selectCoin"></select>
       <label for=inputAmount"> Amount </label>
-      <input type="number" step="any" 
-        class="form-control" id="inputAmount">
+      <input type="number" step="any" class="form-control" id="inputAmount">
+      <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
+        Add 
+      </button>
     </div>
-    <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
-      Add 
-    </button>
-    <div>
+    <div id="divTotal">
       <h2> Total Value: <span id="total"></span> </h2>
     </div>
 
-    <div>
+    <div id="divTableCoin">
       <table id="tableCoin" class="table table-striped">
         <thead>
           <tr>
@@ -36,7 +33,7 @@
             <th>Amount</th>
             <th>Price</th>
             <th>Total</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>

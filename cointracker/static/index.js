@@ -57,8 +57,8 @@ const addCoin = () => {
 }
 
 const deleteCoin = (e) => {
-  let tbody = e.target.parentNode.parentNode;
-  let tr = e.target.parentNode;
+  let tbody = e.target.parentNode.parentNode.parentNode;
+  let tr = e.target.parentNode.parentNode;
   let id = tr.firstChild.innerHTML;
   let total = tr.querySelector(":nth-child(4)").innerHTML;
   let coins = JSON.parse(window.localStorage.getItem("coins"));
@@ -123,22 +123,23 @@ const addCoinToTable = (coin) => {
   node = document.createTextNode(coin.amount);
   amount.appendChild(node);
   let price = document.createElement("td");
-  node = document.createTextNode(coin.price);
+  node = document.createTextNode(coin.price + "€");
   price.appendChild(node);
   let total = document.createElement("td");
-  node = document.createTextNode(coin.total);
+  node = document.createTextNode(coin.total + "€");
   total.appendChild(node);
 
+  let tdBtn = document.createElement("td");
   let button = document.createElement("button");
-  node = document.createTextNode("Delete");
+  button.classList.add("btnDelete");
   button.onclick = (e) => {deleteCoin(e)};
-  button.appendChild(node);
+  tdBtn.appendChild(button);
 
   tr.append(id);
   tr.append(amount);
   tr.append(price);
   tr.append(total);
-  tr.append(button);
+  tr.append(tdBtn);
   document.getElementById("tableCoin")
     .getElementsByTagName("tbody")[0]
     .append(tr);
@@ -161,7 +162,7 @@ const updateTotal = () => {
   getCoins(coins => { 
     let total = 0;
     coins.forEach(coin => total += parseFloat(coin.total));
-    span.innerHTML = total.toFixed(2);
+    span.innerHTML = total.toFixed(2) + "€";
   });
 }
 

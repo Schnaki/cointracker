@@ -1,0 +1,33 @@
+#content {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#divTotal {
+  margin: auto;
+  width: 50%;
+}
+
+#divTableCoin {
+  margin: auto;
+  width: 70%
+}
+
+.btnDelete {
+  background-image: url("http://schnake.xyz/cointracker/btn_delete.png");
+  background-size: 32px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+}
+
+#tableCoin {
+  border-spacing: 0px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid black;
+}
+
