@@ -131,8 +131,12 @@ const addCoinToTable = (coin) => {
 
   let tdBtn = document.createElement("td");
   let button = document.createElement("button");
-  button.classList.add("btnDelete");
+  node = document.createTextNode("Delete");
+  button.classList.add("btnDelte");
+  button.classList.add("btn");
+  button.classList.add("btn-danger");
   button.onclick = (e) => {deleteCoin(e)};
+  button.appendChild(node);
   tdBtn.appendChild(button);
 
   tr.append(id);

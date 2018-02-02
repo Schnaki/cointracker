@@ -7,19 +7,23 @@
   <meta name="author" content="">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="static/index.css">
+  <link rel="stylesheet" href="http://schnake.xyz/static/bootstrap.min.css">
 </head>
 
 <body>
-  <div id="content">
-    <div id="divAdd">
-      <label for="selectCoin"> Select Coin: </label>
-      <select class="form-control" id="selectCoin"></select>
-      <label for=inputAmount"> Amount </label>
-      <input type="number" step="any" class="form-control" id="inputAmount">
-      <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
-        Add 
-      </button>
+  <div class="container">
+    <div id="divAdd" class="row">
+      <div class="form-group col-md-4">
+        <select class="form-control" id="selectCoin" placeholder="Select Coin"></select>
+      </div>
+      <div class="form-group col-md-4">
+        <input placeholder="Enter Amount" type="number" step="any" class="form-control" id="inputAmount">
+      </div>
+      <div class="col-md-2">
+        <button id="btnAdd" onclick="addCoin()" class="btn btn-primary"> 
+          Add 
+        </button>
+      </div>
     </div>
     <div id="divTotal">
       <h2> Total Value: <span id="total"></span> </h2>
