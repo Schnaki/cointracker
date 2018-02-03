@@ -1,5 +1,9 @@
 import json
 import requests
+import urllib.parse
+import datetime
+import pymongo
+from pymongo import MongoClient
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -8,6 +12,29 @@ app = Flask (__name__)
 
 API_ENDPOINT = "https://api.coinmarketcap.com/v1/ticker/"
 
+def connect_mongodb():
+    f = open("auth.json", "r")
+    parsed = json.loads(f.read())
+    username = urllib.parse.quote_plus(parsed["username"])
+    password = urllib.parse.quote_plus(parsed["password"])
+    client = MongoClient("mongodb://%s:%s@127.0.0.1/cointracker" % (username, password))
+    return client.cointracker
+
+db = connect_mongodb() 
+db.users.create_index([("email", pymongo.ASCENDING)], unique=True)
+
+
+@app.route("/signup", methods=['POST'])
+def signup():
+    parsed = json.loads(request.data)
+    email = parsed["email"]
+    password = parsed["password"]
+    user = {"email": email, "password": password, "date": datetime.datetime.utcnow()}
+    try:
+        db.users.insert_one(user) 
+        return "success"
+    except:
+        return "email already exists"
 
 @app.route("/")
 def index():
