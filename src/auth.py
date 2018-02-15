@@ -1,4 +1,3 @@
-import pymongo
 import jwt
 import datetime
 import bcrypt
@@ -40,7 +39,9 @@ def handle_signup(db, data):
             "email": email,
             "password": hashed,
             "date": datetime.datetime.utcnow(),
-            "coins": []
+            "total": 0,
+            "total_history": [],
+            "currency": ""
     }
     try:
         user_id = db.users.insert_one(user).inserted_id
@@ -84,7 +85,7 @@ def handle_signin(db, data):
 
 def encode_token(user_id):
     payload = {
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
         'iat': datetime.datetime.utcnow(),
         'sub': str(user_id)
     }

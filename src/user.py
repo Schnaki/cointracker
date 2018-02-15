@@ -1,25 +1,17 @@
 import json
 from bson import ObjectId
 
-def add_coin(db, user_id, data):
+def get_total(db, user_id):
     try:
-        db.users.update(
-                {'_id': ObjectId(user_id)},
-                {'$push': {
-                    'coins': {
-                        'name': data['name'], 
-                        'amount': data['amount']
-                        }
-                     }
-                 }
-        )
+        user = db.users.find_one({'_id': ObjectId(user_id)})
         return json.dumps({
-            'status':'success',
-            'message': 'Successfully added coin'
+            'status': 'success',
+            'message': 'Successfully got total from user',
+            'total': user['total']
         })
     except Exception as e:
+        print(e)
         return json.dumps({
             'status':'fail',
-            'message': 'adding coin failed'
+            'message': 'getting total failed'
         })
-

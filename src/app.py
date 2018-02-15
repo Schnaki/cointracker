@@ -1,16 +1,12 @@
 import json
-import requests
 import db
 import auth
+import coin
+import coinmarketcap
 import user
 from flask import Flask
-from flask import render_template
 from flask import request
 app = Flask (__name__)
-
-
-
-API_ENDPOINT = "https://api.coinmarketcap.com/v1/ticker/"
 
 mydb = db.connect()
 db.init(mydb)
@@ -25,46 +21,45 @@ def signin():
     data = json.loads(request.data)
     return auth.handle_signin(mydb, data)
 
-@app.route('/api/add-coin', methods=['GET', 'POST'])
+@app.route('/api/get-total', methods=['GET'])
+@auth.login_required
+def get_total(user_id):
+    return user.get_total(mydb, user_id)
+
+@app.route('/api/add-coin', methods=['POST'])
 @auth.login_required
 def add_coin(user_id):
     data = json.loads(request.data)
-    return user.add_coin(mydb, user_id, data)
+    return coin.add_coin(mydb, user_id, data)
 
-@app.route("/api/coin")
-def get_coin_price():
-    coin = request.args.get("coin")
-    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content.decode("utf-8");
-    return get_coin_price_helper(coin)
+@app.route('/api/update-coin', methods=['POST'])
+@auth.login_required
+def update_coin(user_id):
+    data = json.loads(request.data)
+    return coin.update_coin(mydb, user_id, data)
 
-@app.route("/api/coins")
-def get_coin_prices():
-    coins = json.loads(request.args.get("coins"))
-    coin_price = []
-    for coin in coins:
-        coin_price.append(get_coin_price_helper(coin));
-    return json.dumps(coin_price)
+@app.route('/api/remove-coin', methods=['POST'])
+@auth.login_required
+def remove_coin(user_id):
+    data = json.loads(request.data)
+    return coin.remove_coin(mydb, user_id, data)
 
-def save_available_coin_ids():
-    content = requests.get(API_ENDPOINT).content.decode("utf-8");
-    parsed = json.loads(content)
-    coin_ids = []
-    for coin in parsed:
-        coin_ids.append(coin["id"])
+@app.route('/api/get-coins', methods=['GET'])
+@auth.login_required
+def get_coins(user_id):
+    return coin.get_coins(mydb, user_id)
 
-    coin_ids.sort()
-    return coin_ids
+@app.route('/api/get-coin', methods=['GET'])
+@auth.login_required
+def get_coin(user_id):
+    return coin.get_coin(mydb, request.args.get('id'))
 
+CMC_IDS = coinmarketcap.get_coin_ids()
 
-COIN_IDS = save_available_coin_ids()
-
-@app.route("/api/coin-ids")
+@app.route("/api/cmc-ids")
 def get_coin_ids():
-    return json.dumps(COIN_IDS)
+    return json.dumps(CMC_IDS)
 
-def get_coin_price_helper(coin):
-    content = requests.get(API_ENDPOINT+coin+"?convert=EUR").content.decode("utf-8");
-    return json.loads(content)[0]["price_eur"]
 
 
         
