@@ -50,7 +50,7 @@ def update_coin(db, user_id, data):
                 {'_id': ObjectId(data['id'])},
                 {
                     '$set': {
-                        'amount': data['amount'],
+                        'amount': float(data['amount']),
                         'total': float(data['amount']) * coin['price']
                     }
                 }
@@ -91,6 +91,7 @@ def remove_coin(db, user_id, data):
             'status': 'fail',
             'message': 'removing coin failed'
         })
+
 
 def get_coin(db, id):
     try:

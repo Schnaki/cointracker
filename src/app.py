@@ -4,12 +4,16 @@ import auth
 import coin
 import coinmarketcap
 import user
+import timed
 from flask import Flask
 from flask import request
-app = Flask (__name__)
+app = Flask(__name__)
 
 mydb = db.connect()
 db.init(mydb)
+
+timed.update_coins(mydb)
+timed.save_total(mydb)
 
 @app.route("/api/signup", methods=['POST'])
 def signup():
