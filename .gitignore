@@ -1,0 +1,3 @@
+*.json
+test.sh
+__pycache__
