@@ -17,12 +17,12 @@ timed.save_total(mydb)
 
 @app.route("/api/signup", methods=['POST'])
 def signup():
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     return auth.handle_signup(mydb, data)
 
 @app.route("/api/signin", methods=['POST'])
 def signin():
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     return auth.handle_signin(mydb, data)
 
 @app.route('/api/get-total', methods=['GET'])
@@ -33,19 +33,19 @@ def get_total(user_id):
 @app.route('/api/add-coin', methods=['POST'])
 @auth.login_required
 def add_coin(user_id):
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     return coin.add_coin(mydb, user_id, data)
 
 @app.route('/api/update-coin', methods=['POST'])
 @auth.login_required
 def update_coin(user_id):
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     return coin.update_coin(mydb, user_id, data)
 
 @app.route('/api/remove-coin', methods=['POST'])
 @auth.login_required
 def remove_coin(user_id):
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     return coin.remove_coin(mydb, user_id, data)
 
 @app.route('/api/get-coins', methods=['GET'])
