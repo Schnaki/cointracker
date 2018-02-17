@@ -20,10 +20,10 @@ def signup():
     data = json.loads(request.data.decode('utf-8'))
     return auth.handle_signup(mydb, data)
 
-@app.route("/api/signin", methods=['POST'])
-def signin():
+@app.route("/api/login", methods=['POST'])
+def login():
     data = json.loads(request.data.decode('utf-8'))
-    return auth.handle_signin(mydb, data)
+    return auth.handle_login(mydb, data)
 
 @app.route('/api/get-total', methods=['GET'])
 @auth.login_required

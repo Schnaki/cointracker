@@ -56,7 +56,8 @@ def handle_signup(db, data):
             'message': 'email already exists'
         })
 
-def handle_signin(db, data):
+
+def handle_login(db, data):
     user = db.users.find_one({'username': data['username']})
 
     if user is None:
