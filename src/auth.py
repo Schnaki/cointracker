@@ -53,7 +53,7 @@ def handle_signup(db, data):
     except:
         return json.dumps({
             'status':'fail',
-            'message': 'email already exists'
+            'message': 'username already exists'
         })
 
 
